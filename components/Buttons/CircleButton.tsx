@@ -6,7 +6,7 @@ import { COLORS } from "../../constants/styles/colors";
 
 import { ButtonProps } from "./Button";
 
-const CircleButton = ({ onPress }: Omit<ButtonProps, "label">) => {
+export const CircleButton = ({ onPress }: Omit<ButtonProps, "label">) => {
   return (
     <View style={circleButtonContainer}>
       <Pressable
@@ -22,8 +22,6 @@ const CircleButton = ({ onPress }: Omit<ButtonProps, "label">) => {
     </View>
   );
 };
-
-export default CircleButton;
 
 const { circleButtonContainer, circleButton } = StyleSheet.create({
   circleButtonContainer: {

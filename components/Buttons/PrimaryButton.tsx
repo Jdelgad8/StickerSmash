@@ -1,17 +1,11 @@
 import React from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { COLORS } from "../../constants/styles/colors";
+import { ButtonProps, buttonStyles } from "buttons";
+import { COLORS } from "constants";
 
-import { ButtonProps, buttonStyles } from "./Button";
-
-const PrimaryButton = ({ label, onPress }: ButtonProps) => {
+export const PrimaryButton = ({ label, onPress }: ButtonProps) => {
   return (
     <View style={[buttonStyles.buttonContainer, primaryButtonContainer]}>
       <Pressable
@@ -31,8 +25,6 @@ const PrimaryButton = ({ label, onPress }: ButtonProps) => {
     </View>
   );
 };
-
-export default PrimaryButton;
 
 const { primaryButtonContainer, primaryButton, buttonIconTextColor } =
   StyleSheet.create({

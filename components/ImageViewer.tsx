@@ -6,7 +6,7 @@ type Props = {
   placeHolderImage: ImageSourcePropType;
 };
 
-const ImageViewer = ({ placeHolderImage, selectedImage }: Props) => {
+export const ImageViewer = ({ placeHolderImage, selectedImage }: Props) => {
   const imageSource: ImageSourcePropType = selectedImage
     ? { uri: selectedImage }
     : placeHolderImage;
@@ -19,8 +19,6 @@ const ImageViewer = ({ placeHolderImage, selectedImage }: Props) => {
     </View>
   );
 };
-
-export default ImageViewer;
 
 const { image, imageContainer } = StyleSheet.create({
   image: {

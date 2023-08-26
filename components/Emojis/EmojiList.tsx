@@ -16,7 +16,7 @@ export type EmojiListProps = {
   onCloseModal: () => void;
 };
 
-const EmojiList = ({ onSelect, onCloseModal }: EmojiListProps) => {
+export const EmojiList = ({ onSelect, onCloseModal }: EmojiListProps) => {
   const [emojis, setEmojis] = useState<EmojiListType>(EMOJI_LIST);
 
   const onEmojiPress = (emoji: ImageSourcePropType) => {
@@ -45,8 +45,6 @@ const EmojiList = ({ onSelect, onCloseModal }: EmojiListProps) => {
     />
   );
 };
-
-export default EmojiList;
 
 const { listContainer, image } = StyleSheet.create({
   listContainer: {

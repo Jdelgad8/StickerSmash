@@ -1,33 +1,35 @@
 import React, { useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import {
-  GestureResponderEvent,
   ImageSourcePropType,
+  GestureResponderEvent,
   StyleSheet,
   View,
 } from "react-native";
+import { StatusBar } from "expo-status-bar";
 import * as ImagePicker from "expo-image-picker";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import * as MediaLibrary from "expo-media-library";
 
-import Button from "./components/Buttons/Button";
-import CircleButton from "./components/Buttons/CircleButton";
-import IconButton from "./components/Buttons/IconButton";
-import ImageViewer from "./components/ImageViewer";
-import PrimaryButton from "./components/Buttons/PrimaryButton";
-import EmojiPicker from "./components/Emoji/EmojiPicker";
-import EmojiList from "./components/Emoji/EmojiList";
-import EmojiSticker from "./components/Emoji/EmojiSticker";
+import { ImageViewer } from "components/ImageViewer";
+import { ACCESS_PRIVILEGES } from "constants";
+import { Button, CircleButton, IconButton, PrimaryButton } from "buttons";
+import { EmojiList, EmojiPicker, EmojiSticker } from "emojis";
+import { checkPermission } from "helpers/permissions";
 
-export type AppProps = {};
 const PlaceHolderImage: ImageSourcePropType = require("./assets/images/imagen-cool.png");
 
-const App: React.FC<AppProps> = () => {
+const App: React.FC = () => {
+  const [mediaStatus, requestPermission] = MediaLibrary.usePermissions();
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isPermissionModalVisible, setIsPermissionModalVisible] =
+    useState<boolean>(false);
   const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType>();
 
-  const onPickImage = async () => {
+  console.log("rendered");
+
+  const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
@@ -37,6 +39,21 @@ const App: React.FC<AppProps> = () => {
       setSelectedImage(result.assets[0].uri);
       setShowAppOptions(true);
     }
+  };
+
+  const onPickImageButtonPress = async () => {
+    checkPermission<MediaLibrary.PermissionResponse>({
+      status: mediaStatus,
+      requestPermission,
+      setShowModal: setIsPermissionModalVisible,
+    });
+    const hasMediaPermission =
+      mediaStatus?.accessPrivileges !== ACCESS_PRIVILEGES.NONE;
+    if (!hasMediaPermission) {
+      mediaStatus.accessPrivileges;
+      return;
+    }
+    pickImage();
   };
 
   const onUseImage = (e: GestureResponderEvent) => {
@@ -60,6 +77,8 @@ const App: React.FC<AppProps> = () => {
   };
   return (
     <GestureHandlerRootView style={container}>
+      {isPermissionModalVisible && <></>}
+      {/* TODO: Add Modal when user doesn't have permissions */}
       <ImageViewer
         placeHolderImage={PlaceHolderImage}
         selectedImage={selectedImage}
@@ -91,7 +110,7 @@ const App: React.FC<AppProps> = () => {
           <View style={footerContainer}>
             <PrimaryButton
               label='Choose a photo'
-              onPress={onPickImage}
+              onPress={onPickImageButtonPress}
             />
             <Button
               label='Use this photo'

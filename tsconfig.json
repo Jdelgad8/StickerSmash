@@ -1,3 +1,15 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "assets/*": ["assets/*"],
+      "buttons": ["components/Buttons/index"],
+      "components/*": ["components/*"],
+      "constants": ["constants/index"],
+      "emojis": ["components/Emojis/index"],
+      "helpers/*": ["helpers/*"]
+    }
+  }
 }

@@ -2,13 +2,13 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { ButtonProps } from "./Button";
+import { ButtonProps } from "buttons";
 
 export type IconButton = ButtonProps & {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
 };
 
-const IconButton = ({ icon, label, onPress }: IconButton) => {
+export const IconButton = ({ icon, label, onPress }: IconButton) => {
   return (
     <Pressable
       style={iconButton}
@@ -23,8 +23,6 @@ const IconButton = ({ icon, label, onPress }: IconButton) => {
     </Pressable>
   );
 };
-
-export default IconButton;
 
 const { iconButton, iconButtonLabel } = StyleSheet.create({
   iconButton: {

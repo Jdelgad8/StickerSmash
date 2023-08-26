@@ -1,31 +1,30 @@
+import React from "react";
 import {
   GestureResponderEvent,
   Pressable,
   StyleSheet,
   Text,
-  View
+  View,
 } from "react-native";
-import React from "react";
 
 export type ButtonProps = {
-  label: String,
-  onPress: (event: GestureResponderEvent) => void
+  label: String;
+  onPress: (event: GestureResponderEvent) => void;
 };
 
-const Button = ({ label, onPress }: ButtonProps) => {
+export const Button = ({ label, onPress }: ButtonProps) => {
+  const { button, buttonContainer, buttonLabel } = buttonStyles;
   return (
-    <View style={buttonStyles.buttonContainer}>
+    <View style={buttonContainer}>
       <Pressable
-        style={buttonStyles.button}
+        style={button}
         onPress={onPress}
       >
-        <Text style={buttonStyles.buttonLabel}>{label}</Text>
+        <Text style={buttonLabel}>{label}</Text>
       </Pressable>
     </View>
   );
 };
-
-export default Button;
 
 export const buttonStyles = StyleSheet.create({
   buttonContainer: {

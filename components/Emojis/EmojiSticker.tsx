@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import {
   GestureEvent,
-  GestureEventPayload,
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
   TapGestureHandler,
@@ -43,7 +42,10 @@ export type dragAnimationContextType = {
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 const AnimatedView = Animated.createAnimatedComponent(View);
 
-const EmojiSticker = ({ imageSize, stickerSource }: EmojiStickerProps) => {
+export const EmojiSticker = ({
+  imageSize,
+  stickerSource,
+}: EmojiStickerProps) => {
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
   const scaleImage = useSharedValue(imageSize);
@@ -104,5 +106,3 @@ const EmojiSticker = ({ imageSize, stickerSource }: EmojiStickerProps) => {
     </PanGestureHandler>
   );
 };
-
-export default EmojiSticker;
