@@ -1,15 +1,17 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
+    "lib": ["DOM", "ES2017"],
     "strict": true,
     "baseUrl": ".",
     "paths": {
       "assets/*": ["assets/*"],
-      "buttons": ["components/Buttons/index"],
+      "buttons": ["components/Button/index"],
       "components/*": ["components/*"],
       "constants": ["constants/index"],
-      "emojis": ["components/Emojis/index"],
-      "helpers/*": ["helpers/*"]
+      "emojis": ["components/Emoji/index"],
+      "helpers/*": ["helpers/*"],
+      "modals": ["components/Modal/index"]
     }
   }
 }

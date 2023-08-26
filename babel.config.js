@@ -9,11 +9,12 @@ module.exports = function (api) {
           alias: {
             // This needs to be mirrored in tsconfig.json
             assets: "./assets",
-            buttons: "./components/Buttons",
+            buttons: "./components/Button",
             components: "./components",
             constants: "./constants",
-            emojis: "./components/Emojis",
+            emojis: "./components/Emoji",
             helpers: "./helpers",
+            modals: "./components/Modal",
           },
         },
       ],

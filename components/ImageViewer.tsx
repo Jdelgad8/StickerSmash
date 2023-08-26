@@ -1,5 +1,5 @@
-import { Image, ImageSourcePropType, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { RefObject } from "react";
+import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
 type Props = {
   selectedImage: string;
@@ -11,23 +11,17 @@ export const ImageViewer = ({ placeHolderImage, selectedImage }: Props) => {
     ? { uri: selectedImage }
     : placeHolderImage;
   return (
-    <View style={imageContainer}>
-      <Image
-        source={imageSource}
-        style={image}
-      />
-    </View>
+    <Image
+      source={imageSource}
+      style={image}
+    />
   );
 };
 
-const { image, imageContainer } = StyleSheet.create({
+const { image } = StyleSheet.create({
   image: {
     width: 320,
     height: 440,
     borderRadius: 18,
-  },
-  imageContainer: {
-    flex: 1,
-    paddingTop: 58,
   },
 });

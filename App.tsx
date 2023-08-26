@@ -1,33 +1,42 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
-  ImageSourcePropType,
   GestureResponderEvent,
+  ImageSourcePropType,
+  Linking,
+  Platform,
   StyleSheet,
   View,
 } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import * as ImagePicker from "expo-image-picker";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as MediaLibrary from "expo-media-library";
+import { StatusBar } from "expo-status-bar";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import {
+  Button,
+  CircleButton,
+  IconButton,
+  PrimaryButton,
+} from "components/Button";
 import { ImageViewer } from "components/ImageViewer";
-import { ACCESS_PRIVILEGES } from "constants";
-import { Button, CircleButton, IconButton, PrimaryButton } from "buttons";
-import { EmojiList, EmojiPicker, EmojiSticker } from "emojis";
+import { EmojiList, EmojiPicker, EmojiSticker } from "components/Emoji";
 import { checkPermission } from "helpers/permissions";
+import { AskPermissionModal } from "components/Modal";
+import { saveMobileImage, saveWebImage } from "./helpers";
 
 const PlaceHolderImage: ImageSourcePropType = require("./assets/images/imagen-cool.png");
 
 const App: React.FC = () => {
+  const imageRef = useRef<View>(null);
+
   const [mediaStatus, requestPermission] = MediaLibrary.usePermissions();
+
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isPermissionModalVisible, setIsPermissionModalVisible] =
     useState<boolean>(false);
   const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType>();
-
-  console.log("rendered");
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -41,19 +50,17 @@ const App: React.FC = () => {
     }
   };
 
+  const hasMediaPermission = mediaStatus?.granted === true;
+
   const onPickImageButtonPress = async () => {
     checkPermission<MediaLibrary.PermissionResponse>({
       status: mediaStatus,
       requestPermission,
       setShowModal: setIsPermissionModalVisible,
     });
-    const hasMediaPermission =
-      mediaStatus?.accessPrivileges !== ACCESS_PRIVILEGES.NONE;
-    if (!hasMediaPermission) {
-      mediaStatus.accessPrivileges;
-      return;
+    if (hasMediaPermission) {
+      pickImage();
     }
-    pickImage();
   };
 
   const onUseImage = (e: GestureResponderEvent) => {
@@ -65,30 +72,60 @@ const App: React.FC = () => {
     setSelectedImage("");
     setPickedEmoji(undefined);
   };
+
   const onAddSticker = () => {
     setIsModalVisible(true);
   };
-  const onSaveImage = () => {
-    // TODO
+
+  const onSaveImage = async () => {
+    checkPermission<MediaLibrary.PermissionResponse>({
+      status: mediaStatus,
+      requestPermission,
+      setShowModal: setIsPermissionModalVisible,
+    });
+    if (!hasMediaPermission) return;
+    if (Platform.OS === "web") {
+      saveWebImage<View>(imageRef);
+    }
+    if (Platform.OS === "ios" || Platform.OS === "android") {
+      saveMobileImage<View>(imageRef);
+    }
   };
 
   const onModalClose = () => {
     setIsModalVisible(false);
   };
+
+  const onGoToSettingsPress = () => {
+    Linking.openSettings();
+    setIsPermissionModalVisible(false);
+  };
+
   return (
     <GestureHandlerRootView style={container}>
-      {isPermissionModalVisible && <></>}
-      {/* TODO: Add Modal when user doesn't have permissions */}
-      <ImageViewer
-        placeHolderImage={PlaceHolderImage}
-        selectedImage={selectedImage}
+      <AskPermissionModal
+        title={"Media permission required"}
+        body={"Please go to settings and allow Expo Go to access media files"}
+        isVisible={isPermissionModalVisible}
+        onPress={onGoToSettingsPress}
       />
-      {pickedEmoji && (
-        <EmojiSticker
-          imageSize={40}
-          stickerSource={pickedEmoji}
-        />
-      )}
+      <View style={imageContainer}>
+        <View
+          ref={imageRef}
+          collapsable={false}
+        >
+          <ImageViewer
+            placeHolderImage={PlaceHolderImage}
+            selectedImage={selectedImage}
+          />
+          {pickedEmoji && (
+            <EmojiSticker
+              imageSize={40}
+              stickerSource={pickedEmoji}
+            />
+          )}
+        </View>
+      </View>
       {showAppOptions ? (
         <View style={optionsContainer}>
           <View style={optionsRow}>
@@ -133,25 +170,34 @@ const App: React.FC = () => {
   );
 };
 
-const { container, footerContainer, optionsContainer, optionsRow } =
-  StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#25292e",
-      alignItems: "center",
-    },
-    footerContainer: {
-      flex: 1 / 3,
-      alignItems: "center",
-    },
-    optionsContainer: {
-      position: "absolute",
-      bottom: 80,
-    },
-    optionsRow: {
-      alignItems: "center",
-      flexDirection: "row",
-    },
-  });
+const {
+  container,
+  footerContainer,
+  optionsContainer,
+  optionsRow,
+  imageContainer,
+} = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#25292e",
+    alignItems: "center",
+  },
+  footerContainer: {
+    flex: 1 / 3,
+    alignItems: "center",
+  },
+  optionsContainer: {
+    position: "absolute",
+    bottom: 80,
+  },
+  optionsRow: {
+    alignItems: "center",
+    flexDirection: "row",
+  },
+  imageContainer: {
+    flex: 1,
+    paddingTop: 58,
+  },
+});
 
 export default App;

@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-import { ButtonProps, buttonStyles } from "buttons";
+import { ButtonProps, buttonStyles } from "components/Button";
 import { COLORS } from "constants";
 
 export const PrimaryButton = ({ label, onPress }: ButtonProps) => {
@@ -34,7 +34,7 @@ const { primaryButtonContainer, primaryButton, buttonIconTextColor } =
       borderRadius: 18,
     },
     primaryButton: {
-      backgroundColor: "#fff",
+      backgroundColor: COLORS.light,
     },
     buttonIconTextColor: {
       color: COLORS.iconTextColor,

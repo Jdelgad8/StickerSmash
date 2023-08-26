@@ -1,9 +1,5 @@
-import { ACCESS_PRIVILEGES } from "constants";
-
-export type AccessPrivilegesType = "all" | "limited" | "none" | undefined;
-
 export interface PermissionsProps {
-  accessPrivileges?: AccessPrivilegesType;
+  granted?: boolean;
   canAskAgain?: boolean;
 }
 
@@ -19,10 +15,12 @@ export const checkPermission = <T extends PermissionsProps>({
   setShowModal,
 }: CheckPermissionArgsType<T>): void => {
   setShowModal(false);
-  const noMediaPermission = status?.accessPrivileges === ACCESS_PRIVILEGES.NONE;
+  const noMediaPermission = status?.granted === false;
   const canRequestMediaPermission =
     !status || (noMediaPermission && status?.canAskAgain === true);
-  if (canRequestMediaPermission) requestPermission();
+  if (canRequestMediaPermission) {
+    requestPermission();
+  }
   if (noMediaPermission && !canRequestMediaPermission) {
     setShowModal(true);
   }

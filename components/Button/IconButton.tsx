@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { ButtonProps } from "buttons";
+import { ButtonProps } from "components/Button";
 
 export type IconButton = ButtonProps & {
   icon: React.ComponentProps<typeof MaterialIcons>["name"];
