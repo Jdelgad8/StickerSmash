@@ -15,6 +15,8 @@ module.exports = function (api) {
             emojis: "./components/Emoji",
             helpers: "./helpers",
             modals: "./components/Modal",
+            text: "./components/Text",
+            theme: "./constants/styles/theme",
           },
         },
       ],

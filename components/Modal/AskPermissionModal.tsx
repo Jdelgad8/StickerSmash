@@ -1,14 +1,13 @@
-import { Button } from "components/Button";
-import { COLORS } from "constants";
 import { FC } from "react";
 import {
   GestureResponderEvent,
-  Linking,
   Modal,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { Button } from "components/Button";
+import { theme } from "constants/styles/theme";
 
 export type AskPermissionModalProps = {
   title: string;
@@ -43,7 +42,7 @@ export const AskPermissionModal: FC<AskPermissionModalProps> = ({
 };
 const { modalContainer, modalBody, modalTitle } = StyleSheet.create({
   modalContainer: {
-    backgroundColor: COLORS.darkBackground,
+    backgroundColor: theme.color.backgroundPrimary,
     justifyContent: "center",
     alignItems: "center",
     height: "25%",
@@ -57,12 +56,12 @@ const { modalContainer, modalBody, modalTitle } = StyleSheet.create({
   modalTitle: {
     fontSize: 25,
     fontWeight: "bold",
-    color: COLORS.light,
+    color: theme.color.textLight,
     marginBottom: 10,
   },
   modalBody: {
     fontSize: 18,
     fontWeight: "normal",
-    color: COLORS.light,
+    color: theme.color.light,
   },
 });

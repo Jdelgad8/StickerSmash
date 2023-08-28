@@ -11,7 +11,9 @@
       "constants": ["constants/index"],
       "emojis": ["components/Emoji/index"],
       "helpers/*": ["helpers/*"],
-      "modals": ["components/Modal/index"]
+      "modals": ["components/Modal/index"],
+      "text/*": ["components/Text/*"],
+      "theme": ["constants/styles/theme"]
     }
   }
 }

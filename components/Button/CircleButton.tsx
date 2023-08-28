@@ -2,9 +2,8 @@ import React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { COLORS } from "../../constants/styles/colors";
-
 import { ButtonProps } from "./Button";
+import { theme } from "constants/styles/theme";
 
 export const CircleButton = ({ onPress }: Omit<ButtonProps, "label">) => {
   return (
@@ -16,7 +15,7 @@ export const CircleButton = ({ onPress }: Omit<ButtonProps, "label">) => {
         <MaterialIcons
           name='add'
           size={38}
-          color={COLORS.iconTextColor}
+          color={theme.color.iconPrimary}
         />
       </Pressable>
     </View>
@@ -29,7 +28,7 @@ const { circleButtonContainer, circleButton } = StyleSheet.create({
     height: 84,
     marginHorizontal: 60,
     borderWidth: 4,
-    borderColor: COLORS.borderColor,
+    borderColor: theme.color.borderPrimary,
     borderRadius: 42,
     padding: 3,
   },

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { COLORS } from "constants";
+import { theme } from "constants/styles/theme";
 
 export type EmojiPickerProps = {
   isVisible: boolean;
@@ -25,7 +25,7 @@ export const EmojiPicker = ({
           <Pressable onPress={onClose}>
             <MaterialIcons
               name='close'
-              color='#fff'
+              color={theme.color.light}
               size={22}
             />
           </Pressable>
@@ -40,7 +40,7 @@ const { modalContent, title, titleContainer } = StyleSheet.create({
   modalContent: {
     height: "25%",
     width: "100%",
-    backgroundColor: COLORS.iconTextColor,
+    backgroundColor: theme.color.backgroundSecondary,
     borderTopRightRadius: 18,
     borderTopLeftRadius: 18,
     position: "absolute",
@@ -48,7 +48,7 @@ const { modalContent, title, titleContainer } = StyleSheet.create({
   },
   titleContainer: {
     height: "16%",
-    backgroundColor: COLORS.darkBackground,
+    backgroundColor: theme.color.backgroundPrimary,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingHorizontal: 20,
@@ -57,7 +57,7 @@ const { modalContent, title, titleContainer } = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    color: "#fff",
+    color: theme.color.light,
     fontSize: 16,
   },
   pickerContainer: {

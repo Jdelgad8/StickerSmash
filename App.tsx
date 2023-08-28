@@ -23,6 +23,7 @@ import { EmojiList, EmojiPicker, EmojiSticker } from "components/Emoji";
 import { checkPermission } from "helpers/permissions";
 import { AskPermissionModal } from "components/Modal";
 import { saveMobileImage, saveWebImage } from "./helpers";
+import { StyledText } from "text/StyledText";
 
 const PlaceHolderImage: ImageSourcePropType = require("./assets/images/imagen-cool.png");
 
@@ -125,6 +126,12 @@ const App: React.FC = () => {
             />
           )}
         </View>
+        <StyledText
+          style={undefined}
+          themeConfig={{ color: "textLight" }}
+        >
+          StyledText
+        </StyledText>
       </View>
       {showAppOptions ? (
         <View style={optionsContainer}>

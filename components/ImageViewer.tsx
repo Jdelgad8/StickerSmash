@@ -1,12 +1,15 @@
 import React, { RefObject } from "react";
 import { Image, ImageSourcePropType, StyleSheet } from "react-native";
 
-type Props = {
+type ImageViewerProps = {
   selectedImage: string;
   placeHolderImage: ImageSourcePropType;
 };
 
-export const ImageViewer = ({ placeHolderImage, selectedImage }: Props) => {
+export const ImageViewer = ({
+  placeHolderImage,
+  selectedImage,
+}: ImageViewerProps) => {
   const imageSource: ImageSourcePropType = selectedImage
     ? { uri: selectedImage }
     : placeHolderImage;
